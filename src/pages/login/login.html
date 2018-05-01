@@ -1,0 +1,50 @@
+<!-- <ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+</ion-header> -->
+
+<ion-content padding class="bgImage">
+<br>
+<br>
+<br>
+  <h3 class='textAlignCenter'>
+    <img src='assets/imgs/logo.png' style="width: 150px">
+  </h3>
+
+
+  <form [formGroup]="users" (ngSubmit)="doLogin()">
+    <ion-list>
+      <ion-item>
+        <ion-label floating>Id</ion-label>
+        <ion-input formControlName="userName" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input formControlName="passWord" type="password"></ion-input>
+      </ion-item>
+    </ion-list>
+    <button ion-button block [disabled]="!users.valid">Log In</button>
+  </form>
+
+  <ion-row style="text-align: center;margin-top: 70px;display: none;">
+    <ion-col>
+      <img src='assets/imgs/download.png'>
+    </ion-col>
+  </ion-row>
+ 
+
+</ion-content>
+<ion-footer>
+    
+        <ion-row>
+            <ion-col class="cmpy-title">
+              <p>Powered by <b>AheadRace Software</b></p>
+            </ion-col>
+          </ion-row>
+  
+  </ion-footer>

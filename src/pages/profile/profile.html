@@ -1,0 +1,215 @@
+<!--
+  Generated template for the ProfilePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>profile</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="bgImage">
+
+  <img class="profilePageImage" src="assets/imgs/img_avatar.png" />
+
+  <div *ngIf="userProfile">
+    <div class="menuProfileName textAlignCenter paddingTop">{{userProfile?.FirstName}} {{userProfile?.LastName}} </div>
+    <p class='menuProfileDesig textAlignCenter'>{{userProfile?.Role.Name}}</p>
+  </div>
+  <div *ngIf="localUserObj">
+    <div class="menuProfileName textAlignCenter paddingTop">{{localUserObj?.FirstName}} {{localUserObj?.LastName}} </div>
+    <p class='menuProfileDesig textAlignCenter'>{{localUserObj?.RoleName}}</p>
+  </div>
+
+  <!-- <p class='menuProfileDesig textAlignCenter'>{{userProfile.roleName}}</p> -->
+  <div *ngIf="userProfile">
+
+    <ion-item class="profile-item">
+      <ion-row>
+        <ion-col col-4 class="profile-item-title">Email</ion-col>
+        <ion-col col-8>{{userProfile?.Email}}</ion-col>
+      </ion-row>
+
+    </ion-item>
+
+    <ion-item class="profile-item">
+      <ion-row>
+        <ion-col col-4 class="profile-item-title">Mobile</ion-col>
+        <ion-col col-8>{{userProfile?.MobileNumber}}</ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item class="profile-item">
+      <ion-row>
+        <ion-col col-4 class="profile-item-title">State</ion-col>
+        <ion-col col-8>{{userProfile?.Address.State.StateName}}</ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item class="profile-item">
+      <ion-row>
+        <ion-col col-4 class="profile-item-title">Country</ion-col>
+        <ion-col col-8>{{userProfile?.Address.Country.CountryName}}</ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item class="profile-item">
+      <ion-row>
+        <ion-col col-4 class="profile-item-title">Region</ion-col>
+        <ion-col col-8>{{userProfile?.Address.Region.RegionName}}</ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item class="profile-item">
+      <ion-row>
+        <ion-col col-4 class="profile-item-title">Postal Code</ion-col>
+        <ion-col col-8>{{userProfile?.Address.PostalCode}}</ion-col>
+      </ion-row>
+    </ion-item>
+
+
+    <ion-item class="profile-item">
+      <ion-row>
+        <ion-col col-4 class="profile-item-title">District</ion-col>
+        <ion-col col-8>{{userProfile?.Address.District.DistrictName}}</ion-col>
+      </ion-row>
+    </ion-item >
+
+    <ion-item class="profile-item">
+      <ion-row>
+        <ion-col col-4 class="profile-item-title">EPA</ion-col>
+        <ion-col col-8>{{userProfile?.Address.EPA.EPAName}}</ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item class="profile-item">
+        <ion-row>
+          <ion-col col-4 class="profile-item-title">Section</ion-col>
+          <ion-col col-8>{{userProfile?.Address.Section.SectionName}}</ion-col>
+        </ion-row>
+      </ion-item>
+   
+
+  </div>
+
+
+  <div *ngIf="localUserObj">
+
+
+      <ion-item class="profile-item">
+          <ion-row>
+            <ion-col col-4 class="profile-item-title">Email</ion-col>
+            <ion-col col-8>{{localUserObj?.Email}}</ion-col>
+          </ion-row>
+    
+        </ion-item>
+    
+        <ion-item class="profile-item">
+          <ion-row>
+            <ion-col col-4 class="profile-item-title">Mobile</ion-col>
+            <ion-col col-8>{{localUserObj?.MobileNumber}}</ion-col>
+          </ion-row>
+        </ion-item>
+    
+        <ion-item class="profile-item">
+          <ion-row>
+            <ion-col col-4 class="profile-item-title">State</ion-col>
+            <ion-col col-8>{{localUserObj?.State}}</ion-col>
+          </ion-row>
+        </ion-item>
+    
+        <ion-item class="profile-item">
+          <ion-row>
+            <ion-col col-4 class="profile-item-title">Country</ion-col>
+            <ion-col col-8>{{localUserObj?.Country}}</ion-col>
+          </ion-row>
+        </ion-item>
+    
+        <ion-item class="profile-item">
+          <ion-row>
+            <ion-col col-4 class="profile-item-title">Region</ion-col>
+            <ion-col col-8>{{localUserObj?.Region}}</ion-col>
+          </ion-row>
+        </ion-item>
+    
+        <ion-item class="profile-item">
+          <ion-row>
+            <ion-col col-4 class="profile-item-title">Postal Code</ion-col>
+            <ion-col col-8>{{localUserObj?.PostalCode}}</ion-col>
+          </ion-row>
+        </ion-item>
+    
+    
+        <ion-item class="profile-item">
+          <ion-row>
+            <ion-col col-4 class="profile-item-title">District</ion-col>
+            <ion-col col-8>{{localUserObj?.District}}</ion-col>
+          </ion-row>
+        </ion-item >
+    
+        <ion-item class="profile-item">
+          <ion-row>
+            <ion-col col-4 class="profile-item-title">EPA</ion-col>
+            <ion-col col-8>{{localUserObj?.EPA}}</ion-col>
+          </ion-row>
+        </ion-item>
+    
+        <ion-item class="profile-item">
+            <ion-row>
+              <ion-col col-4 class="profile-item-title">Section</ion-col>
+              <ion-col col-8>{{localUserObj?.Section}}</ion-col>
+            </ion-row>
+          </ion-item>
+
+    <!-- <ion-item>
+      Email
+      <ion-badge item-end>{{localUserObj?.Email}}</ion-badge>
+    </ion-item>
+    <ion-item>
+      Mobile
+      <ion-badge item-end>{{localUserObj?.MobileNumber}}</ion-badge>
+    </ion-item>
+    <ion-item>
+      State
+      <ion-badge item-end>{{localUserObj?.State}}</ion-badge>
+    </ion-item>
+
+    <ion-item>
+      Country
+      <ion-badge item-end>{{localUserObj?.Country}}</ion-badge>
+    </ion-item>
+
+    <ion-item>
+      Region
+      <ion-badge item-end>{{localUserObj?.Region}}</ion-badge>
+    </ion-item>
+
+    <ion-item>
+      Postal Code
+      <ion-badge item-end>{{localUserObj?.PostalCode}}</ion-badge>
+    </ion-item>
+
+    <ion-item>
+      District
+      <ion-badge item-end>{{localUserObj?.District}}</ion-badge>
+    </ion-item>
+
+    <ion-item>
+      EPA
+      <ion-badge item-end>{{localUserObj?.EPA}}</ion-badge>
+    </ion-item>
+
+    <ion-item>
+      Section
+      <ion-badge item-end>{{localUserObj?.Section}}</ion-badge>
+    </ion-item> -->
+
+  </div>
+
+
+</ion-content>

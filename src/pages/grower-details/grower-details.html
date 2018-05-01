@@ -1,0 +1,107 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Grower Details</ion-title>
+    <!-- <ion-buttons end>
+      <button ion-button color="light" clear (click)="closeModal()">Close</button>
+    </ion-buttons> -->
+  </ion-navbar>
+
+
+</ion-header>
+
+
+<ion-content *ngIf="grower" padding>
+  <ion-list>
+    <ion-item>
+      <ion-row>
+        <ion-col>
+          Grower Name
+        </ion-col>
+        <ion-col>
+          {{grower.GrowerName}}
+        </ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item>
+      <ion-row>
+        <ion-col>
+          Address
+        </ion-col>
+        <ion-col>
+          {{grower?.User.Address.District.DistrictName}}
+        </ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item (click)="call(grower.User.MobileNumber);">
+      <ion-row>
+        <ion-col>
+          Mobile
+        </ion-col>
+        <ion-col style="    color: blue;">
+          {{grower.User.MobileNumber}}
+        </ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item>
+      <ion-row>
+        <ion-col>
+          Crop
+        </ion-col>
+        <ion-col>
+          {{grower.ProductCategory.ProductCategoryName}}
+        </ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item>
+      <ion-row>
+        <ion-col>
+          Variety
+        </ion-col>
+        <ion-col>
+          {{grower.Product.ProductName}}
+        </ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item>
+      <ion-row>
+        <ion-col>
+        Class of seed
+        </ion-col>
+        <ion-col>
+          {{grower.ProductClass.ClassName}}
+        </ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item>
+      <ion-row>
+        <ion-col>
+          Area
+        </ion-col>
+        <ion-col>
+          {{grower.Area}}
+        </ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item>
+        <ion-row>
+          <ion-col>
+          Seed Source
+          </ion-col>
+          <ion-col>
+            {{grower.SeedSource}}
+          </ion-col>
+        </ion-row>
+      </ion-item>
+
+
+    <button ion-button block [disabled]="grower.Status == 'Inspected'" (click)="inspectNow(grower.ProductCategory.ProductCategoryName,grower.ProductClass.ClassName,grower.Product.ProductName,grower.ID)">Inspect</button>
+  </ion-list>
+</ion-content>

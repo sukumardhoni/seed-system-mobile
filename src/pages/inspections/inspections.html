@@ -1,0 +1,69 @@
+<ion-header>
+
+  <ion-navbar hideBackButton="true">
+    <button ion-button menuToggle>
+      <ion-icon name="menu" style="color:white"></ion-icon>
+    </button>
+    <ion-title>Inspection List</ion-title>
+    <ion-buttons right>
+      <form>
+        <input type="search" placeholder="Search " (input)='searchAsync($event)'>
+      </form>
+    </ion-buttons>
+  </ion-navbar>
+
+
+</ion-header>
+
+
+
+<ion-content>
+
+
+  <ion-list>
+    <ion-item>
+      <ion-label> Filter Inspected Growers</ion-label>
+      <ion-toggle checked="false" [(ngModel)]="itemCompleted"  (ionChange)="updateItem(itemCompleted)"></ion-toggle>
+    </ion-item>
+    <ion-item-sliding *ngFor="let grower of newGrowers">
+      <ion-item (click)="GrowerDetails(grower)">
+        <ion-avatar  item-start>
+          <img class="bgAvatar" src="assets/imgs/img_avatar.png">
+        </ion-avatar>
+        <h2 class="grower-title">{{grower.GrowerName}}</h2>
+
+        <h3 class="grower-details">
+          <ion-icon name="md-clipboard" item-start class="grower-icon"></ion-icon> {{grower?.ProductCategory.ProductCategoryName}} - {{grower.Product.ProductName}}</h3>
+        <h3 class="grower-details">
+          <ion-icon name="md-clipboard" item-start class="grower-icon"></ion-icon> {{grower?.User.Address.District.DistrictName}}</h3>
+        <!-- <p class="grower-details">  <ion-icon name="md-call" item-start class="grower-icon"></ion-icon> {{grower.mobile | phone}}</p>-->
+        <ion-icon class="arrow-icon" name="ios-arrow-forward-outline" item-end></ion-icon>
+      </ion-item>
+
+      <ion-item-options side="right">
+        <button  [disabled]="grower.Status == 'Inspected'" ion-button color="primary" (click)="inspectNow(grower.ProductCategory.ProductCategoryName,grower.ProductClass.ClassName,grower.Product.ProductName,grower.ID)">
+          <ion-icon name="md-checkmark-circle-outline"></ion-icon>
+          Inpect Now
+        </button>
+
+
+        <button ion-button color="light" (click)="GrowerDetails(grower)">
+          <ion-icon name="md-eye"></ion-icon>
+          View Details
+        </button>
+
+      </ion-item-options>
+
+    </ion-item-sliding>
+    <div *ngIf="!newGrowers" class="noRecords">
+        No Results Found
+      </div>
+    <div *ngIf="newGrowers?.length == 0" class="noRecords">
+        <ion-spinner name="bubbles"></ion-spinner>
+    </div>
+  </ion-list>
+
+
+
+  <!-- <button  ion-button full (click)="inspectNow()"> Inspect Now</button> -->
+</ion-content>

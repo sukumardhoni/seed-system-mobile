@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1070539361365",
+    "firebase_url": "https://ssu-app.firebaseio.com",
+    "project_id": "ssu-app",
+    "storage_bucket": "ssu-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1070539361365:android:6cb76adce12b638e",
+        "android_client_info": {
+          "package_name": "io.ionic.SSU"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1070539361365-rn2nisgf9im8ec3saqle8m1q94btgo37.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5k5mgxv9_mEdvJnE_YGFsfMT-z9onvXg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

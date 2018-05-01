@@ -1,0 +1,29 @@
+<ion-header>
+
+
+
+  <ion-navbar hideBackButton="true">
+    <button ion-button menuToggle>
+      <ion-icon name="menu" style="color:white"></ion-icon>
+    </button>
+    <ion-title>Home</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="home-bg">
+
+  <ion-row class="charts-padding">
+    <ion-col>
+      <google-chart [data]="PsiPieChartDataForDistrict"></google-chart>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="charts-padding">
+    <ion-col>
+      <google-chart [data]="PsiBarChartDataForDistrict"> </google-chart>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

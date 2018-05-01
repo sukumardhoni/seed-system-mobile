@@ -1,0 +1,171 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Observations</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="bgImage">
+
+
+
+
+    <ion-row>
+        <ion-col col-10>
+          <ion-item>
+            <ion-label>{{growerCrop}}</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col col-2>
+          <button ion-button icon-only (click)="showPrompt()">
+            <ion-icon name="md-camera"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+
+  <form [formGroup]="form" (ngSubmit)="doSaveObv()">
+    <ion-list>
+
+      
+
+      <ion-item >
+        <ion-label >Date of sowing</ion-label>
+        <!-- <ion-input color="dark" type="text" formControlName="dateOfSowing">
+          {{dateOfSowing | date:'short'}}
+        </ion-input> -->
+
+        <ion-datetime displayFormat="MMMM DD, YYYY" formControlName="dateOfSowing" [(ngModel)]="myDate"></ion-datetime>
+        <ion-icon  name="md-calendar" item-right></ion-icon>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Crop stage</ion-label>
+        <ion-select interface="action-sheet" formControlName="cropStage">
+          <ion-option value="Flowering">Flowering</ion-option>
+          <ion-option value="Vegetative">Vegetative</ion-option>
+          <ion-option value="Production">Production</ion-option>
+          <ion-option value="Harvest">Harvest</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Is isolation distance maintained</ion-label>
+        <ion-select interface="action-sheet" formControlName="isolation">
+          <ion-option value="Yes">Yes</ion-option>
+          <ion-option value="No">No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- <ion-item>
+      <ion-label floating>Isolation distance (Meters)*</ion-label>
+      <ion-input color="dark" type="number" [(ngModel)]="user.isolation"></ion-input>
+    </ion-item> -->
+
+      <ion-item>
+
+        <ion-label floating>Maximum % of Off-types</ion-label>
+        <ion-input color="dark" type="number" formControlName="OffTypePlants"></ion-input>
+      </ion-item>
+
+
+
+      <div *ngIf="growerCrop != 'Groundnut'">
+        <ion-item>
+          <ion-label floating>Pest - disease score</ion-label>
+          <ion-input color="dark" type="number" formControlName="PestDiseaseScore"></ion-input>
+        </ion-item>
+
+        <div *ngIf="(variety == 'Hybrid Maize')">
+          <ion-item>
+            <ion-label floating>Male elimination</ion-label>
+            <ion-select formControlName="MaleElimination" interface="action-sheet">
+              <ion-option value="1">YES</ion-option>
+              <ion-option value="0">No</ion-option>
+            </ion-select>
+          </ion-item>
+        </div>
+
+
+        <div *ngIf="((classOfSeed == 'Certified') && (variety == 'Hybrid Maize'))">
+          <ion-item>
+            <ion-label floating>Planting Pattern (female to male ratio)</ion-label>
+            <ion-input color="dark" type="number" formControlName="PlantingPattern"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label floating>Pollinating Females(%)</ion-label>
+            <ion-input color="dark" type="number" formControlName="PollinatingFemales"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label floating>Off-types cobs at shelling</ion-label>
+            <ion-input color="dark" type="number" formControlName="OffTypeCobs"></ion-input>
+          </ion-item>
+        </div>
+
+
+      </div>
+
+
+
+
+      <ion-item>
+        <ion-label floating>Maximum % of Defective seeds/cobs at shelling</ion-label>
+        <ion-input type="text" color="dark" type="number" formControlName="DefectiveCobs"></ion-input>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label floating> Growth Condition</ion-label>
+        <ion-select interface="action-sheet" formControlName="growthCondition">
+          <ion-option value="Excellent">Excellent</ion-option>
+          <ion-option value="Good">Good</ion-option>
+          <ion-option value="Average">Average</ion-option>
+          <ion-option value="bad">Bad</ion-option>
+        </ion-select>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label floating>Remarks by the Inspector</ion-label>
+        <ion-input type="text" color="dark" formControlName="RemarksByInspector"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Recommendation for grower</ion-label>
+        <ion-input type="text" formControlName="RecommendationForGrower"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Recommendation for certification</ion-label>
+        <ion-select formControlName="certRecommendation" interface="action-sheet">
+          <ion-option value="Yes">Yes</ion-option>
+          <ion-option value="No">No</ion-option>
+          <ion-option value="Re-inspect">Re-inspect</ion-option>
+        </ion-select>
+      </ion-item>
+
+    </ion-list>
+    <button ion-button full [disabled]="!form.valid">Submit</button>
+  </form>
+
+
+  <!-- <button ion-button icon-start full (click)="OnTakePicture()">
+    <ion-icon name="md-camera"></ion-icon>
+    Take Pictures
+  </button> -->
+
+  <div *ngIf="imgaeUrl">
+    <img src="{{imgaeUrl}}">
+  </div>
+
+</ion-content>
+<ion-footer>
+
+
+
+
+
+</ion-footer>

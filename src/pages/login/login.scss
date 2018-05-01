@@ -1,0 +1,35 @@
+page-login {
+
+}
+
+
+.toast-warning {
+    > div{
+        text-align:center;
+         background-color:#fdc210!important;
+     }
+  }
+
+  .toast-danger {
+    > div{
+        text-align:center;
+         background-color:#F44333 !important;
+     }
+  }
+
+  .toast-success {
+    > div{
+        text-align:center;
+         background-color:#81c531 !important;
+     }  
+  }
+
+  .toast-md .toast-message{
+    
+        padding: 6px 0px 6px 0px !important;
+     
+  }
+
+  .toast-center{
+    text-align:center;
+  }

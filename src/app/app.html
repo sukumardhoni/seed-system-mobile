@@ -1,0 +1,48 @@
+<ion-menu [content]="content">
+  <ion-header>
+    <!-- <ion-toolbar>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar> -->
+
+    <ion-toolbar *ngIf="user" style="height: 50px;">
+        <ion-row (click)="goToPrgofile()" menuClose>
+          <ion-col col-4>
+              <img class="profilePic" src="assets/imgs/img_avatar.png"/>   
+              <img *ngIf="isNetworkAvailable" class="img-green" src="assets/imgs/green.png"/>   
+              <img  *ngIf="isNetworkAvailable == false" class="img-red" src="assets/imgs/red.png"/>    
+          </ion-col>
+          <ion-col col-8>
+              <h3 class="user-profile">{{user.FirstName}} {{user.LastName}}</h3>
+           <div class="user-desc"> {{user?.Role.Name}}</div>
+          </ion-col>
+        </ion-row>
+  
+  
+      </ion-toolbar>
+  </ion-header>
+
+  
+
+  <ion-content class="bg-content">
+    <ion-list>
+
+
+      <div *ngIf="user">
+        <button [disabled]="isNetworkAvailable == false" menuClose ion-item icon-left *ngFor="let p of pages" (click)="openPage(p)" class="btn-bg">
+          <ion-icon name="{{p.icon}}"></ion-icon>
+          {{p.title}}
+        </button>
+      </div>
+
+      <button menuClose ion-item icon-left (click)="signOut()" *ngIf="user" class="btn-bg">
+        <ion-icon name="md-log-out"></ion-icon>
+        Log out
+      </button>
+
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
