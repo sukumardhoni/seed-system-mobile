@@ -56,11 +56,12 @@
     // text-transform: capitalize;
     //font-size: 14px;
     //margin-top: 2px;
+        font-size: 1.6rem;
 }
 
 .toolbar-background {
     //background: #4db960;
-    background-color: #19194d
+    background-color: #19194d;
 }
 
 .back-button.show-back-button {
@@ -120,6 +121,7 @@
     //background-color: #4db960 !important;
     background-color: #19194d !important;
     color: white !important;
+    padding-right: 0px !important;
 }
 
 .bg-content {
@@ -130,10 +132,15 @@
 .btn-bg .item-inner {
     border-bottom: 1.4px solid #fff !important;
     margin-right: 15px;
+    
 }
 
 
 .cmpy-title{
     margin-left: 15px;
     color: #fff;
+}
+.item-md{
+    padding-right: 16px;
+    border-bottom: 1px solid #fff0 !important;
 }

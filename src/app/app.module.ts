@@ -26,7 +26,8 @@ import { Network } from '@ionic-native/network';
 import { DatePicker } from '@ionic-native/date-picker';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { SQLite } from '@ionic-native/sqlite';
-
+import { File } from '@ionic-native/file';
+import { FileTransfer } from '@ionic-native/file-transfer';
 //pipes
 import { PipesModule } from '../pipes/pipes.module'
 
@@ -88,7 +89,9 @@ import { Firebase } from '@ionic-native/firebase';
     DatePicker,
     Diagnostic,
     Firebase,
-    SQLite
+    SQLite,
+    File,
+    FileTransfer
   ]
 })
 export class AppModule { }

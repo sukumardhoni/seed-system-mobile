@@ -9,6 +9,9 @@ import { GrowerDetailsPage } from '../../pages/grower-details/grower-details'
 import { ModalController } from 'ionic-angular';
 import { authService } from '../../services/authService';
 
+
+
+
 @Component({
   selector: 'page-dashboard',
   templateUrl: 'inspections.html',
@@ -24,73 +27,86 @@ export class inspectionsPage {
   section
   itemCompleted
   growers = []
+  newGrowers:any
 
 
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams, private callNumber: CallNumber,
+    public modalCtrl: ModalController, private authservice: authService,
+    ) {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private callNumber: CallNumber,
-    public modalCtrl: ModalController,private authservice: authService) {
     this.currentDate = new Date().getTime()
     console.log(this.currentDate)
+
   }
 
   GrowerDetails(grower) {
     this.navCtrl.push(GrowerDetailsPage, {
       grower: grower
     })
-    // let modal = this.modalCtrl.create(GrowerDetailsPage,{
-    //   grower:grower
-    // });
-    // modal.present();
   }
 
+  role
+  title
   ngOnInit() {
     console.log('ngOnINit')
-    let role = window.localStorage.getItem('Role')
-    let UserID = window.localStorage.getItem('UserID')
-    let mode = 1
-    console.log(role)
+    this.role = JSON.parse(window.localStorage.getItem('Role'))
+    var UserID = JSON.parse(window.localStorage.getItem('UserID'))
+    var mode
+    if (this.role == 4) {
+      mode = 3 //for grower
+      this.title = "Registrations"
+    } else if (this.role == 3){
+      mode = 1 //for Psi
+      this.title = "Inspection"
+    }
+
+    console.log(this.role)
     console.log(UserID)
 
+    this.authservice.GetRegistrationsByUser(mode, UserID)
+      .subscribe(res => {
+        console.log(JSON.stringify(res))
+        this.growers = res
+        //this.newGrowers = this.growers
 
-    this.authservice.GetRegistrationsByUser(mode,UserID)
-    .subscribe(res => {
-      console.log(JSON.stringify(res))
-      this.growers = res
-      //this.newGrowers = this.growers
+        if (this.role == 3) {
+          this.newGrowers = this.growers.filter((grower) => {
+            console.log(grower.Status)
+            return grower.Status == 'Assigned'
+          })
+        }
 
-      this.newGrowers = this.growers.filter((grower) => {
-        console.log(grower.Status)
-        return grower.Status == 'Assigned'
+        if(this.role == 4){
+          this.newGrowers = this.growers
+        }
+
+
       })
-
-    })
   }
-
-
-  newGrowers = []
 
   searchAsync(ev) {
 
     let val = ev.target.value;
-    
-    if ( val.trim() != '') {
+
+    if (val.trim() != '') {
       console.log('search event value ' + val)
-      
+
       this.newGrowers = this.newGrowers.filter((grower) => {
         console.log('search filter ' + JSON.stringify(grower))
         return (grower.GrowerName.toLowerCase().indexOf(val.toLowerCase()) > -1);
       });
     } else {
       console.log('else ' + val)
-      console.log('else ' +  this.itemCompleted)
-     // this.newGrowers = this.newGrowers
+      console.log('else ' + this.itemCompleted)
+      // this.newGrowers = this.newGrowers
 
-      if(this.itemCompleted){
+      if (this.itemCompleted) {
         this.newGrowers = this.growers.filter((grower) => {
           console.log(grower.Status)
           return grower.Status == 'Inspected'
         })
-      }else{
+      } else {
         this.newGrowers = this.growers.filter((grower) => {
           console.log(grower.Status)
           return grower.Status == 'Assigned'
@@ -99,14 +115,14 @@ export class inspectionsPage {
     }
   }
 
-  updateItem(status){
+  updateItem(status) {
     console.log(status)
-    if(status){
+    if (status) {
       this.newGrowers = this.growers.filter((grower) => {
         console.log(grower.Status)
         return grower.Status == 'Inspected'
       })
-    }else{
+    } else {
       //this.newGrowers = this.growers
       this.newGrowers = this.growers.filter((grower) => {
         console.log(grower.Status)
@@ -124,16 +140,16 @@ export class inspectionsPage {
     this.showFarmer = true;
   }
 
-  inspectNow(crop,classOfSeed,Variety,regId) {
+  inspectNow(crop, classOfSeed, Variety, regId) {
     console.log(regId)
     console.log(Variety)
     console.log(crop)
     console.log(classOfSeed)
-    this.navCtrl.push(ObservationsPage,{
-      growerCrop:crop,
-      classOfSeed:classOfSeed,
-      variety:Variety,
-      regId:regId 
+    this.navCtrl.push(ObservationsPage, {
+      growerCrop: crop,
+      classOfSeed: classOfSeed,
+      variety: Variety,
+      regId: regId
     })
   }
 

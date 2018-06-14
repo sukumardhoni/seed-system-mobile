@@ -8,16 +8,20 @@ import { inspectionsPage } from '../inspections/inspections'
 
 import { authService } from '../../services/authService';
 
-import { DatePicker } from '@ionic-native/date-picker';
+//import { DatePicker } from '@ionic-native/date-picker';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Validators, FormBuilder } from '@angular/forms';
 
 import { CameraPage } from '../camera/camera'
 
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+import { File } from '@ionic-native/file';
+
 @Component({
   selector: 'page-grower',
   templateUrl: 'observations.html',
 })
+
 export class ObservationsPage {
 
   user
@@ -27,7 +31,8 @@ export class ObservationsPage {
   regId
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
     private camera: Camera, private photoLibrary: PhotoLibrary, private authservice: authService,
-    private datePicker: DatePicker, private formBuilder: FormBuilder, public toastCtrl: ToastController) {
+    private formBuilder: FormBuilder, public toastCtrl: ToastController,
+    private transfer: FileTransfer, private file: File) {
 
 
 
@@ -109,12 +114,6 @@ export class ObservationsPage {
 
       }
     }
-
-
-
-
-
-
   }
 
 
@@ -123,7 +122,6 @@ export class ObservationsPage {
     this.growerCrop = this.navParams.get('growerCrop');
     this.classOfSeed = this.navParams.get('classOfSeed');
     this.variety = this.navParams.get('variety');
-
   }
 
 
@@ -170,7 +168,7 @@ export class ObservationsPage {
 
     this.authservice.SaveInspectorObservation(this.user)
       .subscribe(res => {
-        
+
         console.log(res)
         let alert = this.alertCtrl.create({
           title: 'Success!',
@@ -180,7 +178,7 @@ export class ObservationsPage {
               text: 'OK',
               handler: data => {
                 console.log('Saved clicked');
-    
+
                 this.navCtrl.setRoot(inspectionsPage)
               }
             }
@@ -188,96 +186,90 @@ export class ObservationsPage {
         });
         alert.present();
       }, error => {
-
+        alert(error)
         let toast = this.toastCtrl.create({
           message: 'No Network available, record saved successfully. Will be synced to server upon network restore',
           position: 'top',
-          cssClass: 'toast-warning'
+          cssClass: 'toast-warning',
+          duration:3000
         });
         toast.present();
 
       })
-
-    
-  }
-
-  
-
-  showDate() {
-    // this.dateOfSowing = new Date()
-    this.datePicker.show({
-      date: new Date(),
-      mode: 'date',
-      androidTheme: this.datePicker.ANDROID_THEMES.THEME_DEVICE_DEFAULT_LIGHT,
-    }).then(
-      date => {
-        // alert('Got date: ' + date)
-        console.log('Got date: ', date)
-        this.dateOfSowing = new Date()
-      },
-      err => {
-        // alert('Error occurred while getting date: ' + err)
-        console.log('Error occurred while getting date: ', err)
-      }
-    );
   }
 
 
+
+  // showDate() {
+  //   // this.dateOfSowing = new Date()
+  //   this.datePicker.show({
+  //     date: new Date(),
+  //     mode: 'date',
+  //     androidTheme: this.datePicker.ANDROID_THEMES.THEME_DEVICE_DEFAULT_LIGHT,
+  //   }).then(
+  //     date => {
+  //       // alert('Got date: ' + date)
+  //       console.log('Got date: ', date)
+  //       this.dateOfSowing = new Date()
+  //     },
+  //     err => {
+  //       // alert('Error occurred while getting date: ' + err)
+  //       console.log('Error occurred while getting date: ', err)
+  //     }
+  //   );
+  // }
 
 
   imgaeUrl
   OnTakePicture(labelId) {
+    const fileTransfer: FileTransferObject = this.transfer.create();
 
-    console.log(labelId);
+    
 
     this.camera.getPicture({
+      quality: 50,
+      destinationType: this.camera.DestinationType.NATIVE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       correctOrientation: true
     })
       .then(imageData => {
-        const currentName = imageData.replace(/^.*[\\\/]/, labelId + '_');
-        // const path = imageData.replace(/[^\/]*$/, '');
-        // const newFileName = new Date().getUTCMilliseconds() + '.jpg';
+        let uri = encodeURI(imageData);
+        const fileUrl = this.file.externalDataDirectory + 'seedSystemImages/' + labelId;
 
+        //const currentName = imageData.replace(/^.*[\\\/]/, '');
+        alert('fileUrl : ' + fileUrl);
+        alert('imageData : '+ imageData);
+        
+        fileTransfer.download(imageData, fileUrl)
+        .then(onFulfiled => {
+          alert(JSON.stringify(onFulfiled))
+        })
 
-        //let base64Image = 'data:image/jpeg;base64,' + imageData;
-
-
+        const sharedUrl = 'file://ARLAP04/SeedSystemImages' + labelId;
+        
+        // fileTransfer.upload(sharedUrl,imageData)
+        // .then(onFulfiled => {
+        //   alert('uplaod sucess : '+JSON.stringify(onFulfiled))
+        // })
+        // .catch(err => {
+        //   alert('uplaod err : '+JSON.stringify(err))
+        // })
+       
+        //const path = imageData.replace(/[^\/]*$/, '');
+        //const newFileName = new Date().getUTCMilliseconds() + '.jpg';
 
         var url = imageData;
-        var album = 'seedCertification';
+        var album = 'seedCertification/' + labelId;
 
         this.photoLibrary.saveImage(url, album)
           .then(Item => {
-            //alert(Item)
-            this.navCtrl.push(CameraPage, {
-              url: url
-
-            })
+            // alert(Item)
           })
           .catch(err => {
             //alert(err)
           })
 
-
-        // this.imgaeUrl = imageData;
-
-
-        // this.file.moveFile(path, currentName, cordova.file.dataDirectory, newFileName)
-        //   .then(data => {
-        //     this.imgaeUrl = data.nativeURL
-        //     this.camera.cleanup()
-
-        //   })
-        //   .catch(err => {
-        //     this.imgaeUrl = ''
-        //     alert('image could not save')
-        //     this.camera.cleanup()
-        //   })
-
-
-
-
+        this.imgaeUrl = imageData;
         // alert(this.imgaeUrl)
 
       })
@@ -329,8 +321,8 @@ export class ObservationsPage {
               let toast = this.toastCtrl.create({
                 message: 'Please Enter Boundries',
                 duration: 3000,
-                position:'top',
-                cssClass:'toast-bg'
+                position: 'top',
+                cssClass: 'toast-bg'
               });
               toast.present();
               return false
@@ -338,11 +330,12 @@ export class ObservationsPage {
           }
 
         }
-        
+
       ]
-  });
-  prompt.present();
-}
+    });
+    prompt.present();
+  }
+
 
 
 }

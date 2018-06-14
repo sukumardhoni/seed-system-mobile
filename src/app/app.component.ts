@@ -20,6 +20,8 @@ export class MyApp {
 
   rootPage: any;
   user
+  title
+  role
   isNetworkAvailable
   //rootPage: any = CameraPage;
   pages: Array<{ title: string, component: any, icon: any }>;
@@ -38,14 +40,14 @@ export class MyApp {
     // }
     if (this.platform.is('cordova')) {
       this.firebase.getToken()
-      .then(token => {
-        // save the token server-side and use it to push notifications to this device
-        window.localStorage.setItem('deviceToken', JSON.stringify(token));
-       // alert(`The token is ${token}`)
-      }) 
+        .then(token => {
+          // save the token server-side and use it to push notifications to this device
+          window.localStorage.setItem('deviceToken', JSON.stringify(token));
+          // alert(`The token is ${token}`)
+        })
       //.catch(error => alert('Error getting token'+ error));
     }
-    
+
 
     //subscribe an event if network is lost
     events.subscribe('isNetworkAvailable', (network) => {
@@ -60,25 +62,42 @@ export class MyApp {
         this.user = user;
         this.isNetworkAvailable = true;
         console.log('in the app component', this.user)
+        this.role = JSON.parse(window.localStorage.getItem('Role'))
+        console.log(this.role)
+        this.initializePages();
+
+        // if (this.role == 4) {
+        //   this.title = "Registrations" //for grower
+        //   console.log(this.title)
+        // }
+
+        // if (this.role == 3) {
+        //   this.title = "Inspect" //for Psi
+        //   console.log(this.title)
+        // }
       }
     });
 
     this.user = JSON.parse(window.localStorage.getItem('user'));
-    console.log('in the app component', this.user)
+    //console.log('in the app component', this.user)
 
     if (this.user) {
       this.rootPage = HomePage
     } else {
       this.rootPage = LoginPage
     }
+    this.role = JSON.parse(window.localStorage.getItem('Role'))
+
+    console.log(this.role)
+    if (this.role == 4) {
+      this.initializePages() //for grower
+    }
+
+    if (this.role == 3) {
+      this.initializePages() //for Psi
+    }
 
 
-    // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Home', component: HomePage, icon: 'md-pie' },
-      { title: 'Inspect', component: inspectionsPage, icon: 'md-clipboard' }
-
-    ];
 
   }
 
@@ -105,28 +124,41 @@ export class MyApp {
     if (this.platform.is('cordova')) {
       this.removeUserTable();
     }
-
-   
-
   }
 
-  removeUserTable(){
+  removeUserTable() {
     let rowid = 1
     this.sqlite.create({
       name: 'ionicdb.db',
       location: 'default'
     }).then((db: SQLiteObject) => {
       db.executeSql('DELETE FROM usertable WHERE rowid=?', [rowid])
-      .then(res => {
-        console.log(res);
-      })
-      .catch(e =>  console.log(e));
-    }).catch(e =>  console.log(e));
+        .then(res => {
+          console.log(res);
+        })
+        .catch(e => console.log(e));
+    }).catch(e => console.log(e));
   }
-  
+
   goToPrgofile() {
     console.log('goToPrgofile')
 
     this.nav.push(ProfilePage)
+  }
+
+  initializePages() {
+    if (this.role == 3) {
+      // used for an example of ngFor and navigation
+      this.pages = [
+        { title: 'Home', component: HomePage, icon: 'md-pie' },
+        { title: 'Inspect', component: inspectionsPage, icon: 'md-clipboard' }
+      ];
+    }
+    if(this.role == 4){
+      this.pages = [
+        { title: 'Home', component: HomePage, icon: 'md-pie' },
+        { title: 'Registrations', component: inspectionsPage, icon: 'md-clipboard' }
+      ];
+    }
   }
 }

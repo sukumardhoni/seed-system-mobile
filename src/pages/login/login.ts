@@ -51,7 +51,7 @@ export class LoginPage {
                 this.users.reset();
 
               } else {
-                if (userDetails.Role.RoleID == 3) {
+                if (userDetails.Role.RoleID == 3 || userDetails.Role.RoleID == 4) {
                   console.log('paraseed inspector')
                   window.localStorage.setItem('Role', JSON.stringify(userDetails.Role.RoleID))
                   window.localStorage.setItem('UserID', JSON.stringify(userDetails.UserID))

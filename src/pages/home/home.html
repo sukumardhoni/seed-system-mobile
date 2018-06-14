@@ -20,9 +20,15 @@
     </ion-col>
   </ion-row>
 
-  <ion-row class="charts-padding">
+  <ion-row class="charts-padding" *ngIf="Role == 3">
     <ion-col>
       <google-chart [data]="PsiBarChartDataForDistrict"> </google-chart>
+    </ion-col>
+  </ion-row>
+
+  <ion-row class="charts-padding" *ngIf="Role == 4">
+    <ion-col>
+      <google-chart [data]="growerpieChartData"> </google-chart>
     </ion-col>
   </ion-row>
 

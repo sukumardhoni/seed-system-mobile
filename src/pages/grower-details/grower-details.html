@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Grower Details</ion-title>
+    <ion-title>{{title}}</ion-title>
     <!-- <ion-buttons end>
       <button ion-button color="light" clear (click)="closeModal()">Close</button>
     </ion-buttons> -->
@@ -11,44 +11,47 @@
 </ion-header>
 
 
-<ion-content *ngIf="grower" padding>
+<ion-content *ngIf="grower">
   <ion-list>
-    <ion-item>
-      <ion-row>
-        <ion-col>
-          Grower Name
-        </ion-col>
-        <ion-col>
-          {{grower.GrowerName}}
-        </ion-col>
-      </ion-row>
-    </ion-item>
+    <div *ngIf="role == 3">
+      <ion-item class="profile-item">
+        <ion-row>
+          <ion-col class="profile-item-title">
+            Grower Name
+          </ion-col>
+          <ion-col>
+            {{grower.GrowerName}}
+          </ion-col>
+        </ion-row>
+      </ion-item>
 
-    <ion-item>
-      <ion-row>
-        <ion-col>
-          Address
-        </ion-col>
-        <ion-col>
-          {{grower?.User.Address.District.DistrictName}}
-        </ion-col>
-      </ion-row>
-    </ion-item>
+      <ion-item class="profile-item">
+        <ion-row>
+          <ion-col class="profile-item-title">
+            Address
+          </ion-col>
+          <ion-col>
+            {{grower?.User.Address.District.DistrictName}}
+          </ion-col>
+        </ion-row>
+      </ion-item>
 
-    <ion-item (click)="call(grower.User.MobileNumber);">
-      <ion-row>
-        <ion-col>
-          Mobile
-        </ion-col>
-        <ion-col style="    color: blue;">
-          {{grower.User.MobileNumber}}
-        </ion-col>
-      </ion-row>
-    </ion-item>
+      <ion-item class="profile-item" (click)="call(grower.User.MobileNumber);">
+        <ion-row>
+          <ion-col class="profile-item-title">
+            Mobile
+          </ion-col>
+          <ion-col style="    color: blue;">
+            {{grower.User.MobileNumber}}
+          </ion-col>
+        </ion-row>
+      </ion-item>
+    </div>
 
-    <ion-item>
+
+    <ion-item class="profile-item">
       <ion-row>
-        <ion-col>
+        <ion-col class="profile-item-title">
           Crop
         </ion-col>
         <ion-col>
@@ -57,9 +60,9 @@
       </ion-row>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="profile-item">
       <ion-row>
-        <ion-col>
+        <ion-col class="profile-item-title">
           Variety
         </ion-col>
         <ion-col>
@@ -68,10 +71,10 @@
       </ion-row>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="profile-item">
       <ion-row>
-        <ion-col>
-        Class of seed
+        <ion-col class="profile-item-title">
+          Class of seed
         </ion-col>
         <ion-col>
           {{grower.ProductClass.ClassName}}
@@ -79,9 +82,9 @@
       </ion-row>
     </ion-item>
 
-    <ion-item>
+    <ion-item class="profile-item">
       <ion-row>
-        <ion-col>
+        <ion-col class="profile-item-title">
           Area
         </ion-col>
         <ion-col>
@@ -90,18 +93,32 @@
       </ion-row>
     </ion-item>
 
-    <ion-item>
-        <ion-row>
-          <ion-col>
+    <ion-item class="profile-item">
+      <ion-row>
+        <ion-col class="profile-item-title">
           Seed Source
-          </ion-col>
-          <ion-col>
-            {{grower.SeedSource}}
-          </ion-col>
-        </ion-row>
-      </ion-item>
+        </ion-col>
+        <ion-col>
+          {{grower.SeedSource}}
+        </ion-col>
+      </ion-row>
+    </ion-item>
 
+    <ion-fab right bottom *ngIf="role == 4" >
+      <button ion-fab color="theme2">
+        <ion-icon name="md-add"></ion-icon>
+      </button>
+      <ion-fab-list side="top">
+        <button ion-fab color="theme2">
+          <ion-icon name="md-camera"></ion-icon>
+        </button>
+      </ion-fab-list>
+    </ion-fab>
 
-    <button ion-button block [disabled]="grower.Status == 'Inspected'" (click)="inspectNow(grower.ProductCategory.ProductCategoryName,grower.ProductClass.ClassName,grower.Product.ProductName,grower.ID)">Inspect</button>
+   <ion-row>
+     <ion-col>
+      <button *ngIf="role == 3" ion-button block [disabled]="grower.Status == 'Inspected'" (click)="inspectNow(grower.ProductCategory.ProductCategoryName,grower.ProductClass.ClassName,grower.Product.ProductName,grower.ID)">Inspect</button>
+     </ion-col>
+   </ion-row>
   </ion-list>
 </ion-content>
